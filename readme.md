@@ -1,40 +1,53 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Book Management Assignment
+it's a project to insert and manage data using laravel5 and backbonejs
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+in this project you will have the next pages :
+A page that will list the books
+A page to add a book
+A page to edit an existing book
+A route to delete a book
+## Getting Started
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Prerequisites
+I'm Running this application on nginx and php-fpm so my nginx conf for this is :
+`server {
+ 	listen 80;
+ 	root   /[Path to your web Folder]/Web/yarakuzen.com/public/;
+    include       conf.d/includes/php.conf[any laravel or php config for nginx that you want];
+ 	server_name local.yarakuzen.com;
+ }
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+set you DB settings and app conf in the .env file, for example :
+`
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+APP_URL=http://local.yarakuzen.com/
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=yarakuzen_com
+DB_USERNAME=root
+DB_PASSWORD=root
+`
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Installing Laravel and node packages.
+Access your web directory
+ - `composer create-project --prefer-dist laravel/laravel laravel5_backbonejs`
+Access  laravel5_backbonejs
+ - install backbone `npm install backbone --save`
+ - install frameworks for frontend `npm install bootstrap jquery --save`
+ - install lodash to make ur coding easier `npm install lodash --save`
+ - install requirejs `npm install requirejs --save`
+ we will use `toastr` to display validation errors.
+Make sure that you have public/js folder in your laravel project
+next step will be to create a symbolic link node_modules folder to expose it to public (p.s this is not a good practise, a better solution would be to use Elixir for example).
+- run this `ln -s node_modules/ public/js/node_modules`
+- in this case i'm using mysql as a database, please create a database and add it to your .env file
+`DB_DATABASE=yarakuzen_com`
+then run this in your terminal to create a migration for the books table
+- `php artisan make:migration create_books_table`
+open the generated file and replace the content with database/migrations/2017_02_01_101044_create_books_table.php
+then run this command
+- `php artisan migrate`
